@@ -1,4 +1,4 @@
-package com.example.mydialer
+package com.example.fragment
 
 import org.junit.Test
 

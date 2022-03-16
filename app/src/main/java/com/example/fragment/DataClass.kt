@@ -1,4 +1,4 @@
-package com.example.mydialer
+package com.example.fragment
 
 data class Contact(
     val name: String,

@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">MyDialer</string>
+    <string name="app_name">Fragment</string>
     <string name="searchHint">Поиск контактов</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.mydialer
+package com.example.fragment
 
 import android.os.Bundle
 import android.text.Editable
@@ -14,7 +14,8 @@ class MainActivity : AppCompatActivity() {
 
         val contentFragment = ContentFragment()
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
+            supportFragmentManager
+                .beginTransaction()
                 .add(R.id.fragment_container_view,
                     contentFragment, null)
                 .commit()

@@ -1,4 +1,4 @@
-package com.example.mydialer
+package com.example.fragment
 
 import android.os.Bundle
 import android.os.StrictMode
@@ -18,7 +18,7 @@ import java.util.concurrent.Executors
 const val url = "https://drive.google.com/u/0/uc?id=1-KO-9GA3NzSgIc1dkAsNm8Dqw0fuPxcR&export=download"
 
 class ContentFragment : Fragment() {
-    private var adapter = Adapter()
+    private var mainAdapter = Adapter()
     private val contactList = contactsRequest()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,15 +30,16 @@ class ContentFragment : Fragment() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
-        adapter.submitList(contactList)
-        val recyclerView: RecyclerView = view.findViewById(R.id.rView)
-        recyclerView.layoutManager = LinearLayoutManager(view.context)
-        recyclerView.adapter = adapter
+        mainAdapter.submitList(contactList)
+        view.findViewById<RecyclerView?>(R.id.rView).apply {
+            layoutManager = LinearLayoutManager(view.context)
+            adapter = mainAdapter
+        }
     }
 
     private fun contactsRequest(): ArrayList<Contact> {
-        val myService: ExecutorService = Executors.newFixedThreadPool(2)
-        val contactList = myService.submit(Callable {
+        val executorService: ExecutorService = Executors.newFixedThreadPool(2)
+        val contactList = executorService.submit(Callable {
             val connection = URL(url).openConnection() as HttpURLConnection
             val jsonData = connection.inputStream.bufferedReader().readText()
             connection.disconnect()
@@ -62,6 +63,6 @@ class ContentFragment : Fragment() {
         else {
             searchList.addAll(contactList)
         }
-        adapter.submitList(searchList)
+        mainAdapter.submitList(searchList)
     }
 }
